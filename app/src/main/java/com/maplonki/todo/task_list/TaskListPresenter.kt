@@ -1,5 +1,7 @@
 package com.maplonki.todo.task_list
 
+import com.maplonki.todo.model.Task
+
 /**
  * Created by hugo on 9/3/18.
  */
@@ -11,14 +13,28 @@ class TaskListPresenter(
     override fun loadTaskList() {
         mTaskListView.showLoading(true)
 
-        mRepository.getTaskList { list ->
-            mTaskListView.showLoading(false)
-            mTaskListView.showTaskList(list)
-        }
+        val list = requestTaskList()
+        mTaskListView.showLoading(false)
+        mTaskListView.showTaskList(list)
     }
 
     override fun filterTaskList(filter: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mTaskListView.showLoading(true)
+
+        mTaskListView.showLoading(false)
+
+        val filterList = requestTaskList(filter)
+
+        mTaskListView.showTaskList(filterList)
+    }
+
+    fun requestTaskList(filter: String = "none "): List<Task> {
+        val list = mRepository.getTaskList()
+
+        return when (filter) {
+            "completed" -> list.filter { it.completed }
+            else -> list
+        }
     }
 
     override fun openTaskNew() {
