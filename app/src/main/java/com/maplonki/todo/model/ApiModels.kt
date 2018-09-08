@@ -8,5 +8,5 @@ data class Task(
         var description: String,
         var date: String,
         var priority: Int,
-        var completed: Boolean
+        var completed: Boolean = false
 )
