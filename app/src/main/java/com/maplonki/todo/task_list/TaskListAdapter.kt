@@ -28,6 +28,8 @@ class TaskListAdapter(
         val task = taskList[position]
 
         holder.descriptionTextView.text = task.description
+        holder.itemView.setOnClickListener { onTaskClick(task) }
+
     }
 
     fun updateItems(list: List<Task>) {

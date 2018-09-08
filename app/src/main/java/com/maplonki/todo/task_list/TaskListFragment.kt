@@ -1,6 +1,7 @@
 package com.maplonki.todo.task_list
 
 import android.app.Fragment
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
@@ -9,9 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.maplonki.todo.R
 import com.maplonki.todo.model.Task
+import com.maplonki.todo.task_create.TaskCreateActivity
+import com.maplonki.todo.task_detail.TaskDetailActivity
 import kotlinx.android.synthetic.main.fragment_task_list.*
 
 /**
@@ -33,6 +35,8 @@ class TaskListFragment : Fragment(), TaskListContract.View {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mCreateTaskButton.setOnClickListener { mTaskActionListener.openTaskNew() }
+
         mTaskListAdapter = TaskListAdapter(activity) { task ->
             mTaskActionListener.openTaskDetail(task.taskId)
         }
@@ -42,7 +46,10 @@ class TaskListFragment : Fragment(), TaskListContract.View {
             layoutManager = LinearLayoutManager(activity)
             adapter = mTaskListAdapter
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         mTaskActionListener.loadTaskList()
     }
 
@@ -55,12 +62,11 @@ class TaskListFragment : Fragment(), TaskListContract.View {
     }
 
     override fun showTaskNew() {
-        //startActivity(Intent(activity, TaskDetailActivity::class.java))
+        startActivity(Intent(activity, TaskCreateActivity::class.java))
     }
 
     override fun showTaskDetail(taskId: Long) {
-        Toast.makeText(activity, "Open detail", Toast.LENGTH_SHORT).show()
-        //startActivity(Intent(activity, TaskCreateActivity::class.java))
+        startActivity(Intent(activity, TaskDetailActivity::class.java))
     }
 
     companion object {
