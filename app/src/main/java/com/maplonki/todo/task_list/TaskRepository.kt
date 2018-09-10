@@ -21,6 +21,10 @@ class TaskRepository {
         return TASK_LIST
     }
 
+    fun getTask(taskId: Long): Task? {
+        return TASK_LIST.singleOrNull { task -> task.taskId == taskId }
+    }
+
 
     fun saveTask(task: Task) {
         TASK_LIST.add(task)

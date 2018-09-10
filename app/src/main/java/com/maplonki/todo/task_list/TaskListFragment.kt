@@ -66,7 +66,11 @@ class TaskListFragment : Fragment(), TaskListContract.View {
     }
 
     override fun showTaskDetail(taskId: Long) {
-        startActivity(Intent(activity, TaskDetailActivity::class.java))
+        val intent = Intent(activity, TaskDetailActivity::class.java).apply {
+            putExtra("task_id", taskId)
+        }
+
+        startActivity(intent)
     }
 
     companion object {
