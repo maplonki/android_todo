@@ -1,6 +1,5 @@
 package com.maplonki.todo.task_create
 
-import android.text.TextUtils
 import com.maplonki.todo.model.Task
 import com.maplonki.todo.task_list.TaskRepository
 
@@ -13,7 +12,7 @@ class TaskCreatePresenter(
 ) : TaskCreateContract.ActionListener {
 
     override fun saveNote(task: String) {
-        if (TextUtils.isEmpty(task)) {
+        if (task.isEmpty()) {
             taskCreateView.showEmptyError()
             return
         }
